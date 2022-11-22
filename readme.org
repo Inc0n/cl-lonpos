@@ -1,0 +1,24 @@
+
+* Lonpos
+A puzzle game.
+
+Here are some external links I found about this game. I do own a copy of it myself, but it is easier to find image instances on the web.
+https://cf.geekdo-images.com/7pTcwGJ0EaNUXHkko3aOEg__imagepage/img/foozGFn5OiYZzKyK2o5BYJoDBcs=/fit-in/900x600/filters:no_upscale():strip_icc()/pic1993676.jpg
+
+* Solver
+
+** Next state search logic
+The solver itself maintains states (list of =state=) between the search. It is a depth-first search. When the state is solved when it satisfies (returns non-nil) =state-solved?=. Equally, when =state-stuck?= is satisfied, the state will be discarded.
+
+Overall it has a functional design, where states are passed into =next-state=, whose procedure is described by the pseudo LISP language below, where =next-state%= would contains the actual implement of =next-state= logic:
+
+#+begin_src lisp
+(defun next-state (state . rest-states)
+  `(,(next-state% state)
+	 ,state
+	 ,@rest-states))
+#+end_src
+
+It should be noted that invalid states are skipped, which is when they do not satisfy =valid-placed-piece?=.
+
+** TODO State 
